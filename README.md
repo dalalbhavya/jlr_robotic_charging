@@ -1,5 +1,7 @@
-# jlr_robotic_charging
-Jaguar Land Rover's Robotic Charging Challenge
+# JLR Robotic Charging Challenge
+Inter IIT 11.0 Mid-Prep Problem Statement
+
+[Problem Statement](/Mid_JLR%20copy.pdf)
 
 # TODO 
 - [ ] Detect the location of the charging port on the vehicle
