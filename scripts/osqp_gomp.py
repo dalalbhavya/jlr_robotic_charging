@@ -5,6 +5,13 @@ import osqp
 import numpy as np
 from scipy import sparse
 import matplotlib.pyplot as plt
+import rospy
+from trajectory_msgs.msg import JointTrajectory
+from trajectory_msgs.msg import JointTrajectoryPoint
+
+rospy.init_node("planner", anonymous=True)
+
+
 
 def matrix_P(dimension):
     row = list()
@@ -232,6 +239,23 @@ def main():
     for i in range(len(joint_wise_solution)):
         for j in range(len(joint_wise_solution[i])):
             joint_wise_solution[i][j] = joint_wise_solution[i][j].round(4)
+
+    joint_trajectory_points_list = list()
+    joint_trajectory_point = JointTrajectoryPoint()
+    for i in range(H+1):
+        joint_trajectory_point.time_from_start.secs = int(time_array[i])
+        joint_trajectory_point.time_from_start.nsecs = int((time_array[i] - int(time_array[i])) * 1000000000)
+        joint_trajectory_point.positions = [joint_wise_solution[i][a] for a in range(N_DOF)]
+        joint_trajectory_point.velocities = [joint_wise_solution[H+1 + i][a] for a in range(N_DOF)]
+        joint_trajectory_point.accelerations = [joint_wise_solution[2*(H+1) + i][a] for a in range(N_DOF)]
+        joint_trajectory_points_list.append(joint_trajectory_point)
+
+
+    joint_trajectory = JointTrajectory()
+    joint_trajectory.joint_names = ["shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist_1_joint", "wrist_2_joint", "wrist_3_joint"]
+    joint_trajectory.points = joint_trajectory_points_list
+    pub = rospy.Publisher("eff_joint_traj_controller/command", JointTrajectory, queue_size=10)
+    pub.publish(joint_trajectory)
 
     print("Execution Time: ", time() -  start_time)
 
