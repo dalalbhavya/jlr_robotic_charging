@@ -3,6 +3,13 @@ Inter IIT 11.0 Mid-Prep Problem Statement
 
 [Problem Statement](/Mid_JLR%20copy.pdf)
 
+# Setup
+* `git clone git@github.com:ros-industrial/universal_robot.git`
+* `rosdep update`
+* `rosdep install --rosdistro $ROS_DISTRO --ignore-src --from-paths src`
+* `roslaunch ur_gazebo ur5_bringup.launch`
+
+
 # TODO 
 - [ ] Design and develop the Simscape/MATLAB environment.
 - [ ] Detect the location of the charging port on the vehicle
