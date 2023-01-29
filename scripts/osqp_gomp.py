@@ -175,6 +175,7 @@ def constraints_matrix(discrete_steps, time_step, ang_max, vel_max, acc_max, jer
     return A, lower_bound, upper_bound
 
 def main():
+    start_time = time()
     N_DOF = 6
     H = 27
     T_STEP = 0.1
@@ -228,11 +229,11 @@ def main():
 
     print("Printing Trajectory End")
 
-
     for i in range(len(joint_wise_solution)):
         for j in range(len(joint_wise_solution[i])):
             joint_wise_solution[i][j] = joint_wise_solution[i][j].round(4)
 
+    print("Execution Time: ", time() -  start_time)
 
 if __name__ == "__main__":
     main()
