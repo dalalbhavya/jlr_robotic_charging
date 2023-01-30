@@ -9,7 +9,7 @@ import rospy
 from trajectory_msgs.msg import JointTrajectory
 from trajectory_msgs.msg import JointTrajectoryPoint
 
-rospy.init_node("planner", anonymous=True)
+
 
 
 
@@ -192,8 +192,11 @@ def main():
     ANG_MAX = PI
     JERK_MAX = 6
 
-    initial_pose_joint_space = [-0.498977, 0.580166, -1.69259, -2.10077, 2.85878, -0.924968]
-    goal_pose_joint_space = [1.01352, 0.277848, -1.90593, -1.52476, 1.34359, 2.25875]
+    # initial_pose_joint_space = [-0.498977, 0.580166, -1.69259, -2.10077, 2.85878, -0.924968]
+    # goal_pose_joint_space = [1.01352, 0.277848, -1.90593, -1.52476, 1.34359, 2.25875]
+
+    initial_pose_joint_space = [1.01352, 0.277848, -1.90593, -1.52476, 1.34359, 2.25875]
+    goal_pose_joint_space = [-0.498977, 0.580166, -1.69259, -2.10077, 2.85878, -0.924968]
 
     #Initializing P
     P = matrix_P(H+1)
@@ -221,41 +224,48 @@ def main():
     for i in range(H+1):
         time_array.append(i*T_STEP)
 
-    print("printing trajectory Start")
-    #Printing trajectory in recorded form
-    for i in range(H+1):
-        #printing first 6 joint values
-        for j in range(N_DOF):
-            print(joint_wise_solution[j][i].round(4))
-        for j in range(N_DOF):
-            print(joint_wise_solution[j][H+1 + i].round(4))
-        for j in range(N_DOF):
-            print(joint_wise_solution[j][2*(H+1) + i].round(4))
-        print(int(time_array[i]))
-        print(int((time_array[i] - int(time_array[i])) * 1000000000))
+    # print("printing trajectory Start")
+    # #Printing trajectory in recorded form
+    # for i in range(H+1):
+    #     #printing first 6 joint values
+    #     for j in range(N_DOF):
+    #         print(joint_wise_solution[j][i].round(4))
+    #     for j in range(N_DOF):
+    #         print(joint_wise_solution[j][H+1 + i].round(4))
+    #     for j in range(N_DOF):
+    #         print(joint_wise_solution[j][2*(H+1) + i].round(4))
+    #     print(int(time_array[i]))
+    #     print(int((time_array[i] - int(time_array[i])) * 1000000000))
 
-    print("Printing Trajectory End")
+    # print("Printing Trajectory End")
 
     for i in range(len(joint_wise_solution)):
         for j in range(len(joint_wise_solution[i])):
             joint_wise_solution[i][j] = joint_wise_solution[i][j].round(4)
 
     joint_trajectory_points_list = list()
-    joint_trajectory_point = JointTrajectoryPoint()
     for i in range(H+1):
+        joint_trajectory_point = JointTrajectoryPoint()
         joint_trajectory_point.time_from_start.secs = int(time_array[i])
         joint_trajectory_point.time_from_start.nsecs = int((time_array[i] - int(time_array[i])) * 1000000000)
-        joint_trajectory_point.positions = [joint_wise_solution[i][a] for a in range(N_DOF)]
-        joint_trajectory_point.velocities = [joint_wise_solution[H+1 + i][a] for a in range(N_DOF)]
-        joint_trajectory_point.accelerations = [joint_wise_solution[2*(H+1) + i][a] for a in range(N_DOF)]
+        joint_trajectory_point.positions = [joint_wise_solution[a][i] for a in range(N_DOF)]
+        joint_trajectory_point.velocities = [joint_wise_solution[a][H+1 + i] for a in range(N_DOF)]
+        joint_trajectory_point.accelerations = [joint_wise_solution[a][2*(H+1) + i] for a in range(N_DOF)]
         joint_trajectory_points_list.append(joint_trajectory_point)
-
+        print(i)
 
     joint_trajectory = JointTrajectory()
     joint_trajectory.joint_names = ["shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist_1_joint", "wrist_2_joint", "wrist_3_joint"]
     joint_trajectory.points = joint_trajectory_points_list
-    pub = rospy.Publisher("eff_joint_traj_controller/command", JointTrajectory, queue_size=10)
+
+    pub = rospy.Publisher("/ur5_arm_controller/command", JointTrajectory, queue_size=10)
+    rospy.init_node("planner", anonymous=False)
+    rate = rospy.Rate(10) # 10hz
     pub.publish(joint_trajectory)
+    rate.sleep()
+    pub.publish(joint_trajectory)
+    rate.sleep()
+    # print(joint_trajectory)
 
     print("Execution Time: ", time() -  start_time)
 
