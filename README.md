@@ -1,9 +1,12 @@
 # JLR Robotic Charging Challenge
 Inter IIT 11.0 Mid-Prep Problem Statement
 
+Team Members: Bhavya Dalal, Raghuvamsi Bokka, Jitendra Kumar Singh, Kailash Pandiyan, Aditya Guhagarkar, Kartikey Sharma, Ebrahim R
+
 [Problem Statement](/Mid_JLR%20copy.pdf)
 
 # Setup
+Setup this [repository](https://github.com/RaghuvamsiBokka/Robotic_EV_Charging) and then proceed
 * `git clone git@github.com:ros-industrial/universal_robot.git`
 * `rosdep update`
 * `rosdep install --rosdistro $ROS_DISTRO --ignore-src --from-paths src`
