@@ -10,15 +10,15 @@ Inter IIT 11.0 Mid-Prep Problem Statement
 * `roslaunch ur_gazebo ur5_bringup.launch`
 
 
-# TODO 
-- [ ] Design and develop the Simscape/MATLAB environment.
-- [ ] Detect the location of the charging port on the vehicle
-    - [ ] CCS2 plug detection
+# Tasks 
+- [x] Design and develop a simulated environment.
+- [x] Detect the location of the charging port on the vehicle
+    - [x] CCS2 plug detection
 - [ ] Avoiding sharp bending angles for charging cable.
     - [ ] Determine the cable size and feasible curvature. 
-- [ ] Implement mechanical Constraints
-    - [ ] Charger plugging operation speed should'nt exceed 0.1 m/s
-    - [ ] Rotation Speed should not exceed 5 deg/sec
-- [ ] Easy to change start and end pose of end-effector.
+- [x] Implement mechanical Constraints
+    - [x] Charger plugging operation speed should'nt exceed 0.1 m/s
+    - [x] Rotation Speed should not exceed 5 deg/sec
+- [x] Easy to change start and end pose of end-effector.
 
  
