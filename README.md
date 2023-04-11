@@ -4,6 +4,7 @@ Inter IIT 11.0 Mid-Prep Problem Statement
 Team Members: Bhavya Dalal, Raghuvamsi Bokka, Jitendra Kumar Singh, Kailash Pandiyan, Aditya Guhagarkar, Kartikey Sharma, Ebrahim R
 
 [Problem Statement](/Mid_JLR%20copy.pdf)
+[Proposed Solution](https://docs.google.com/presentation/d/1NiS9ybhIE18aYPkTaSb8SJ2TNIZBSF7rAvlyM0anSUM/edit#slide=id.g2057620f3a7_1_104)
 
 # Setup
 Setup this [repository](https://github.com/RaghuvamsiBokka/Robotic_EV_Charging) and then proceed
